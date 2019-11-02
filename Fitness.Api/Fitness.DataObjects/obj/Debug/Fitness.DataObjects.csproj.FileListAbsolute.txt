@@ -1,5 +1,0 @@
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.DataObjects\bin\Debug\Fitness.DataObjects.dll
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.DataObjects\bin\Debug\Fitness.DataObjects.pdb
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.DataObjects\obj\Debug\Fitness.DataObjects.csprojAssemblyReference.cache
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.DataObjects\obj\Debug\Fitness.DataObjects.dll
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.DataObjects\obj\Debug\Fitness.DataObjects.pdb

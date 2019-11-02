@@ -1,7 +1,0 @@
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\bin\Debug\Fitness.mdf
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\bin\Debug\Fitness_log.ldf
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\bin\Debug\Fitness.Database.dll
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\bin\Debug\Fitness.Database.pdb
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\obj\Debug\Fitness.Database.csprojAssemblyReference.cache
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\obj\Debug\Fitness.Database.dll
-D:\OneDrive\MSc\Sem 1\Adaptive Application\Group Project\Fitness.Api\Fitness.Database\obj\Debug\Fitness.Database.pdb
