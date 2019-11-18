@@ -129,6 +129,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AllRecipes.cs" />
     <Compile Include="Models\AllUsers.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,7 +211,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52762</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44381/</IISUrl>
+          <IISUrl>https://localhost:44382/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
