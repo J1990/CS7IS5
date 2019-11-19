@@ -1,7 +1,36 @@
-﻿
+﻿@model List<Fitness.DataObjects.Recipe>
 @{
-    ViewBag.Title = "Recipe";
+    ViewBag.Title = "Home Page";
 }
 
-<h2>Recipe</h2>
 
+    
+        <h2>Recipe Recommendations</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Instructions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var recipe in Model)
+                {
+                    <tr scope="row">
+                        <td>
+                            @recipe.RecipeId
+                        </td>
+                        <td>
+                            @recipe.Ingredients
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    
+    @*<div class="col-md-4">
+        <h2>Current User Context</h2>
+        <h4>@ViewBag.Message</h4>
+    </div>*@
