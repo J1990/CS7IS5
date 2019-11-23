@@ -41,16 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FitnessGoalType.cs" />
-    <Compile Include="GenderType.cs" />
-    <Compile Include="IdealMealTime.cs" />
-    <Compile Include="ItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserFeedback.cs" />
-    <Compile Include="UserFeedbackType.cs" />
-    <Compile Include="UserProfile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

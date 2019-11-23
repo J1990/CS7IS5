@@ -2,29 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/TeamPlatte_Project_Outline.pdf
-/TeamPlatte_Pitch.pptx
-/TeamPlatte_Pitch.pdf
-/Project_Outline_10_10_19_v1.docx
-/Project Outline.docx
-/Fitness.jpg
-/Fitness.ClientApp
-/Documentation Examples
-/colorlib-regform-2
-/.vs
-/Fitness.Api/.vs
-/Fitness.Api/Fitness.DataObjects/obj/Debug
-/Fitness.Api/Fitness.DataObjects/bin/Debug
-/Fitness.Api/Fitness.Database/obj/Debug
-/Fitness.Api/Fitness.Database/bin/Debug
-/Fitness.Api/Fitness.DataAccess/obj/Debug
-/Fitness.Api/Fitness.DataAccess/bin/Debug
-/Fitness.Api/Fitness.BusinessLogic/obj/Debug
-/Fitness.Api/Fitness.BusinessLogic/bin/Debug
-/Fitness.Api/Fitness.Api/obj/Debug
-/Fitness.Api/Fitness.Api/bin
-/Fitness.Api/Fitness.Api/Properties/PublishProfiles
-/Fitness.Api/Fitness.Api.Client/bin
-/Fitness.Api/Fitness.Api.Client/obj/Debug
-/Fitness.Api/Fitness.Database/FitnessDB.ldf
-/Fitness.Api/Fitness.Database/FitnessDB.mdf
+/Fitness.Api/.vs/Fitness.Api/v15/Server/sqlite3
