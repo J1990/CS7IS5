@@ -47,6 +47,7 @@
     <Compile Include="RecipeDA.cs" />
     <Compile Include="UserDA.cs" />
     <Compile Include="UserFeedbackDA.cs" />
+    <Compile Include="UserProfileDA.cs" />
     <Compile Include="WorkoutDA.cs" />
   </ItemGroup>
   <ItemGroup>

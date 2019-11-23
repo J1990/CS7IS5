@@ -6,16 +6,23 @@ namespace Fitness.BusinessLogic
 {
     public class RecipeBL
     {
-        RecipeDA recipeDA = null;
+        RecipeDA _recipeDA = null;
+        RecipeRecommender _recipeRecommender = null;
 
         public RecipeBL()
         {
-            recipeDA = new RecipeDA();
+            _recipeDA = new RecipeDA();
+            _recipeRecommender = new RecipeRecommender(_recipeDA);
         }
 
         public List<Recipe> GetAllRecipes()
         {
-            return recipeDA.GetAllRecipes();
+            return _recipeDA.GetAllRecipes();
+        }
+
+        public Dictionary<IdealMealTime, List<Recipe>> GetRecipes(int userId)
+        {
+            return _recipeRecommender.GetRecipesForUser(userId);
         }
     }
 }

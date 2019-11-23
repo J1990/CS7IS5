@@ -13,9 +13,9 @@ namespace Fitness.BusinessLogic
             userFeedbackDA = new UserFeedbackDA();
         }
 
-        public List<UserFeedback> GetFeedbackByUser(int userId)
+        public List<UserFeedback> GetRecipeFeedbackByUser(int userId)
         {
-            return userFeedbackDA.GetFeedbackByUser(userId);
+            return userFeedbackDA.GetRecipeFeedbackByUser(userId);
         }
 
         public void RecordUserFeedback(UserFeedback userFeedback)

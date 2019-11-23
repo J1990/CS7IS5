@@ -8,11 +8,11 @@ namespace Fitness.Api.Controllers
     public class UserFeedbackController : ApiController
     {
         // GET: api/UserFeedback/5
-        public List<UserFeedback> Get(int userId)
-        {
-            UserFeedbackBL userFeedbackBL = new UserFeedbackBL();
-            return userFeedbackBL.GetFeedbackByUser(userId);
-        }
+        //public List<UserFeedback> Get(int userId)
+        //{
+        //    UserFeedbackBL userFeedbackBL = new UserFeedbackBL();
+        //    return userFeedbackBL.GetFeedbackByUser(userId);
+        //}
 
         // POST: api/UserFeedback
         public void Post([FromBody]UserFeedback newUserFeedback)

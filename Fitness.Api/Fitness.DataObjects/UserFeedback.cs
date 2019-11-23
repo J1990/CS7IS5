@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fitness.DataObjects
 {
@@ -14,7 +10,7 @@ namespace Fitness.DataObjects
 
         public ItemType ItemType { get; set; }
 
-        public bool IsLike { get; set; }
+        public UserFeedbackType FeedbackType { get; set; }
 
         public DateTime FeedbackTime { get; set; }
     }
