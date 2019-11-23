@@ -1,0 +1,54 @@
+﻿@model List<Fitness.DataObjects.Recipe>
+@{
+    ViewBag.Title = "Home Page";
+}
+    
+<h2>Recipe Recommendations</h2>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Image</th>
+            <th scope="col">Instructions</th>
+            <th scope="col">Carbohydrate Calories</th>
+            <th scope="col">Protein Calories</th>
+            <th scope="col">Fat Calories</th>
+            <th scope="col">Meal Type</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var recipe in Model)
+        {
+        <tr scope="row">
+            <td>
+                @recipe.RecipeId
+            </td>
+            <td>
+                <img src="@recipe.PhotoUrl" width="50" height="50"/>
+            </td>
+            <td>
+                @recipe.Ingredients
+            </td>
+            <td>
+                @recipe.CarbsCalories
+            </td>
+            <td>
+                @recipe.ProteinCalories
+            </td>
+            <td>
+                @recipe.FatCalories
+            </td>
+            <td>
+                @recipe.IdealMealTime
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+    
+    @*<div class="col-md-4">
+        <h2>Current User Context</h2>
+        <h4>@ViewBag.Message</h4>
+    </div>*@
