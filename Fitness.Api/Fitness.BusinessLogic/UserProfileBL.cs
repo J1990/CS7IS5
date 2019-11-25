@@ -14,7 +14,13 @@ namespace Fitness.BusinessLogic
 
         public UserProfile GetLatestUserProfileForUser(int userId)
         {
-            return userProfileDA.GetLatestUserProfileForUser(userId);
+            var userProfile = userProfileDA.GetLatestUserProfileForUser(userId);
+
+            var dailyCalorieNeedsOfUser = BMRProvider.CalculateBMR(userProfile.WeightInKg, userProfile.HeightInCm, userProfile.AgeInYears, userProfile.Gender);
+
+            userProfile.BMR = dailyCalorieNeedsOfUser;
+
+            return userProfile;
         }
     }
 }

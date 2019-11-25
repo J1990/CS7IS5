@@ -36,7 +36,7 @@ namespace Fitness.BusinessLogic
         {
             var userProfile = _userProfileBL.GetLatestUserProfileForUser(userId);
 
-            var dailyCalorieNeedsOfUser = BMRProvider.CalculateBMR(userProfile.WeightInKg, userProfile.HeightInCm, userProfile.AgeInYears, userProfile.Gender);
+            var dailyCalorieNeedsOfUser = userProfile.BMR;
 
             var recommendedCalorieIntake = GetRecommendedCalorieIntakeForUserGoal(dailyCalorieNeedsOfUser, userProfile.FitnessGoal);
 

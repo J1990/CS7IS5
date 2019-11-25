@@ -1,4 +1,4 @@
-﻿@model List<Fitness.DataObjects.User>
+﻿@model Fitness.Api.Client.Models.UserViewModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -21,7 +21,7 @@
         <h2>Select User</h2>
         <div>
             <ul class="list-group">
-                @foreach (var user in Model)
+                @foreach (var user in @Model.RegisteredUsers)
                 {
                     <li class="list-group-item">
                         @Html.ActionLink(user.UserName, "ChangeUserContext", "Home", new { userId = user.Id }, new { @class = "btn btn-primary btn-large" })
@@ -31,7 +31,15 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h2>Current User Context</h2>
-        <h4>@ViewBag.Message</h4>
+        @if (@Model.UserId != 0)
+        {
+            <h2>Current User Context</h2>
+            <h4>Name: @Model.UserName</h4>
+            <h4>Weight: @Model.WeightInKg kg</h4>
+            <h4>Height: @Model.HeightInCm cms</h4>
+            <h4>Gender: @Model.Gender</h4>
+            <h4>Fitness Goal: @Model.FitnessGoal</h4>
+            <h4>Daily Calorie Needs: @Model.BMR</h4>
+        }
     </div>
 </div>
