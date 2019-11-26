@@ -18,37 +18,8 @@ namespace Fitness.DataAccess
         public WorkoutDA()
         {
             connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //_userProfileBL = new UserProfileBL();
         }
-
-        //public List<Workout> getExercise()
-        //{
-        //    List<Workout> exercise = new List<Workout>();
-        //    using (var dbConnection = new SqlConnection(connectionString))
-        //    {
-        //        //var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_EXERCISE_FOR_USER);
-        //        using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_USER, dbConnection))
-        //        {
-        //            var exerciseTable = new DataTable();
-        //            sqlAdapter.Fill(exerciseTable);
-
-        //            foreach (DataRow row in exerciseTable.Rows)
-        //            {
-        //                var workout = new Workout
-        //                { 
-
-        //                    Workout_ID = row.Field<int>("Workout_ID"),
-        //                    Workout_Name = row.Field<string>("Workout_Name"),
-        //                    FitnessGoal = row.Field<Int32>("FitnessGoal"),
-        //                    BodyPart = row.Field<string>("BodyPart")
-        //                };
-        //                exercise.Add(workout);
-
-        //            }
-
-        //        }
-
-        //        return exercise;
-        //    }
         public List<Workout> getExerciseForWeightGain()
         {
             List<Workout> exerciseGain = new List<Workout>();
@@ -105,53 +76,148 @@ namespace Fitness.DataAccess
                 }
                 return exerciseLoss;
             }
-            //List<Workout> GetWorkoutsByGoal(int goal)
-            //{
-            //    List<Workout> exercises = new List<Workout>();
-            //    using (var dbConnection = new SqlConnection(connectionString))
-            //    {
-            //        using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_USER, dbConnection))
-            //        {
+        }
+            public List<Workout> getExercise(FitnessGoalType goal, string injury)
+            {
+                List<Workout> exercises = new List<Workout>();
+                using (var dbConnection = new SqlConnection(connectionString))
+                {
+                    switch (goal)
+                    {
+                        case (FitnessGoalType.WeightGain):
+                            switch(injury)
+                            {
+                                case ("Upper Body"):
+                                    using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTGAIN_INJURY_UPPERBODYPART, dbConnection))
+                                    {
+                                        var exerciseTable = new DataTable();
+                                        sqlAdapter.Fill(exerciseTable);
+                                        foreach (DataRow row in exerciseTable.Rows)
+                                        {
+                                            var workout = new Workout
+                                            {
+                                                Workout_Name = row.Field<string>("Workout_Name"),
+                                                BodyPart = row.Field<string>("BodyPart"),
+                                                Description = row.Field<string>("Description"),
+                                                Sets = row.Field<int>("Sets"),
+                                                Calories_Burned = row.Field<double>("Calories_Burned")
 
-            //        }
-            //    }
+                                            };
+                                            exercises.Add(workout);
+                                        }
+                                    }
+                                break;
+                            case ("Lower Body"):
+                                using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTGAIN_INJURY_LOWERBODYPART, dbConnection))
+                                {
+                                    var exerciseTable = new DataTable();
+                                    sqlAdapter.Fill(exerciseTable);
+                                    foreach (DataRow row in exerciseTable.Rows)
+                                    {
+                                        var workout = new Workout
+                                        {
+                                            Workout_Name = row.Field<string>("Workout_Name"),
+                                            BodyPart = row.Field<string>("BodyPart"),
+                                            Description = row.Field<string>("Description"),
+                                            Sets = row.Field<int>("Sets"),
+                                            Calories_Burned = row.Field<double>("Calories_Burned")
 
-            //        return exercises;
-            //}
+                                        };
+                                        exercises.Add(workout);
+                                    }
+                                }
+                                break;
+                                case ("No Injury"):
+                                using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTGAIN, dbConnection))
+                                {
+                                    var exerciseTable = new DataTable();
+                                    sqlAdapter.Fill(exerciseTable);
+                                    foreach (DataRow row in exerciseTable.Rows)
+                                    {
+                                        var workout = new Workout
+                                        {
+                                            Workout_Name = row.Field<string>("Workout_Name"),
+                                            BodyPart = row.Field<string>("BodyPart"),
+                                            Description = row.Field<string>("Description"),
+                                            Sets = row.Field<int>("Sets"),
+                                            Calories_Burned = row.Field<double>("Calories_Burned")
 
+                                        };
+                                        exercises.Add(workout);
+                                    }
+                                }
+                                break;
+                            }
+                        break;
+                        case (FitnessGoalType.WeightLoss):
+                            switch (injury)
+                            {
+                                case ("Upper Body"):
+                                using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTLOSS_INJURY_UPPERBODYPART, dbConnection))
+                                {
+                                    var exerciseTable = new DataTable();
+                                    sqlAdapter.Fill(exerciseTable);
+                                    foreach (DataRow row in exerciseTable.Rows)
+                                    {
+                                        var workout = new Workout
+                                        {
+                                            Workout_Name = row.Field<string>("Workout_Name"),
+                                            BodyPart = row.Field<string>("BodyPart"),
+                                            Description = row.Field<string>("Description"),
+                                            Sets = row.Field<int>("Sets"),
+                                            Calories_Burned = row.Field<double>("Calories_Burned")
 
+                                        };
+                                        exercises.Add(workout);
+                                    }
+                                }
+                                break;
+                                case ("Lower Body"):
+                                using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTLOSS_INJURY_LOWERBODYPART, dbConnection))
+                                {
+                                    var exerciseTable = new DataTable();
+                                    sqlAdapter.Fill(exerciseTable);
+                                    foreach (DataRow row in exerciseTable.Rows)
+                                    {
+                                        var workout = new Workout
+                                        {
+                                            Workout_Name = row.Field<string>("Workout_Name"),
+                                            BodyPart = row.Field<string>("BodyPart"),
+                                            Description = row.Field<string>("Description"),
+                                            Sets = row.Field<int>("Sets"),
+                                            Calories_Burned = row.Field<double>("Calories_Burned")
 
-            //public List<UserFeedback> GetFeedbackByUser(int userId)
-            //{
-            //    List<UserFeedback> userFeedbacks = new List<UserFeedback>();
+                                        };
+                                        exercises.Add(workout);
+                                    }
+                                }
+                                break;
+                                case ("No Injury"):
+                                using (var sqlAdapter = new SqlDataAdapter(DatabaseQueries.SELECT_EXERCISE_FOR_WEIGHTLOSS, dbConnection))
+                                {
+                                    var exerciseTable = new DataTable();
+                                    sqlAdapter.Fill(exerciseTable);
+                                    foreach (DataRow row in exerciseTable.Rows)
+                                    {
+                                        var workout = new Workout
+                                        {
+                                            Workout_Name = row.Field<string>("Workout_Name"),
+                                            BodyPart = row.Field<string>("BodyPart"),
+                                            Description = row.Field<string>("Description"),
+                                            Sets = row.Field<int>("Sets"),
+                                            Calories_Burned = row.Field<double>("Calories_Burned")
 
-            //    var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_FEEDBACK_FOR_USER, userId);
-
-            //    using (var dbConnection = new SqlConnection(connectionString))
-            //    {
-            //        using (var sqlAdapter = new SqlDataAdapter(query, dbConnection))
-            //        {
-            //            var userFeedbackTable = new DataTable();
-            //            sqlAdapter.Fill(userFeedbackTable);
-
-            //            foreach (DataRow row in userFeedbackTable.Rows)
-            //            {
-            //                var userFeedback = new UserFeedback
-            //                {
-            //                    UserId = row.Field<int>("UserId"),
-            //                    ItemId = row.Field<int>("ItemId"),
-            //                    ItemType = row.Field<ItemType>("ItemType"),
-            //                    IsLike = row.Field<bool>("IsLike"),
-            //                    FeedbackTime = row.Field<DateTime>("FeedbackTime")
-            //                };
-            //                userFeedbacks.Add(userFeedback);
-            //            }
-            //        }
-            //    }
-
-            //    return userFeedbacks;
-            //}
-
+                                        };
+                                        exercises.Add(workout);
+                                    }
+                                }
+                                break;
+                            }
+                            break;
+                    }
+                }
+            return exercises;
         }
     }
 }
+

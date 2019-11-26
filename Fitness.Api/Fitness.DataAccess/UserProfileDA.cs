@@ -41,6 +41,7 @@ namespace Fitness.DataAccess
                             FitnessGoal = (FitnessGoalType)userTable.Rows[0].Field<short>("FitnessGoal"),
                             AgeInYears = userTable.Rows[0].Field<int>("AgeInYears"),
                             Nationality = userTable.Rows[0].Field<string>("Nationality"),
+                            Injuries = userTable.Rows[0].Field<string>("Injuries"),
                             LastUpdatedDate = new DateTime(userTable.Rows[0].Field<long>("LastUpdatedTimeInTicks"))
                         };
 
