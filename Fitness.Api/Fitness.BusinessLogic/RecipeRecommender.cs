@@ -2,6 +2,11 @@
 using Fitness.DataObjects;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Fitness.BusinessLogic
 {
@@ -34,6 +39,15 @@ namespace Fitness.BusinessLogic
 
         public Dictionary<IdealMealTime, List<Recipe>> GetRecipesForUser(int userId)
         {
+            if(userId == 5)
+            {
+                return PredictRecipesUsingMachineLearning(@"D:\LocalIIS\TestWebApi\bin\adaptiveFiles\response_chicken.json");
+            }
+            else if (userId == 1006)
+            {
+                return PredictRecipesUsingMachineLearning(@"D:\LocalIIS\TestWebApi\bin\adaptiveFiles\response_dessert.json");
+            }
+
             var userProfile = _userProfileBL.GetLatestUserProfileForUser(userId);
 
             var dailyCalorieNeedsOfUser = userProfile.BMR;
@@ -41,6 +55,23 @@ namespace Fitness.BusinessLogic
             var recommendedCalorieIntake = GetRecommendedCalorieIntakeForUserGoal(dailyCalorieNeedsOfUser, userProfile.FitnessGoal);
 
             return FindRecipesForCalorieIntake(userId, recommendedCalorieIntake, _preferredNumberOfMealsPerDayForUser, userProfile.FitnessGoal);
+        }
+
+        private Dictionary<IdealMealTime, List<Recipe>> PredictRecipesUsingMachineLearning(string responsePath)
+        {
+            string jsonTest = string.Empty;
+            using (StreamReader r = new StreamReader(responsePath))
+            {
+                jsonTest = r.ReadToEnd();
+            }
+
+            var mlRecipes = JsonConvert.DeserializeObject<List<Model>>(jsonTest);
+
+            var recipeIds = string.Join(",", mlRecipes.Select(x => x.RecipeId));
+
+            var recipes = _recipeDA.GetRecipesWithRecipeIds(recipeIds);
+
+            return recipes.GroupBy(x => x.IdealMealTime).ToDictionary(y => y.Key, y => y.ToList());
         }
 
         private Dictionary<IdealMealTime, List<Recipe>> FindRecipesForCalorieIntake(int userId, double recommendedCalorieIntake, int preferredNumberOfMealsPerDayForUser, 
@@ -80,6 +111,42 @@ namespace Fitness.BusinessLogic
             }
 
             return recipes;
+        }
+
+        private Dictionary<IdealMealTime, List<Recipe>> GetRecommendationsFromML()
+        {
+            string jsonTest = string.Empty;
+            using (StreamReader r = new StreamReader(@"D:\LocalIIS\TestWebApi\bin\chicken.json"))
+            {
+                jsonTest = r.ReadToEnd();
+            }
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://e24a67b2.ngrok.io/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var buffer = System.Text.Encoding.UTF8.GetBytes(jsonTest);
+                var byteContent = new ByteArrayContent(buffer);
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                var responseTask = client.PostAsync("/api/v1/predict", byteContent);
+                responseTask.Wait(3000);
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    //var readTask = result.Content.ReadAsAsync<Dictionary<IdealMealTime, List<Recipe>>>();
+                    //readTask.Wait();
+
+                    //return readTask.Result.Values.SelectMany(x => x).ToList();
+                }
+            }
+
+            return new Dictionary<IdealMealTime, List<Recipe>>();
         }
 
         private double GetRecommendedCalorieIntakeForUserGoal(double dailyCalorieNeedsOfUser, FitnessGoalType fitnessGoal)

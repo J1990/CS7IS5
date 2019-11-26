@@ -10,8 +10,9 @@
         public const string RECORD_USER_FEEDBACK_FOR_WORKOUT = "INSERT INTO [dbo].[WorkoutUserFeedback] (UserId, WorkoutId, FeedbackType, FeedbackTimeInTicks) VALUES ({0},{1},{2},{3})";
 
         public const string SELECT_ALL_RECIPES = "SELECT TOP 10 * FROM [dbo].[Recipe]";
+        public const string SELECT_RECIPES_WITH_RECIPE_IDS = "SELECT * FROM [dbo].[Recipe] WHERE recipe_id IN ({0})";
         public const string SELECT_RECIPES_WITH_CALORIES_FOR_USER =
-            @"SELECT TOP 5 rec.*, ISNULL(userFeedback.FeedbackType, 0) AS FeedbackType
+            @"SELECT TOP 5 rec.*, ISNULL(userFeedback.FeedbackType, 1) AS FeedbackType
 FROM Recipe rec 
 LEFT JOIN
 (SELECT t.RecipeId,t.FeedbackType
@@ -25,7 +26,32 @@ ON a.RecipeId = t.RecipeId AND a.max_date = FeedbackTimeInTicks)
 as userFeedback
 ON rec.recipe_id = userFeedback.RecipeId
 WHERE IdealMealTime = {1}
-ORDER BY rec.recipe_id, userFeedback.FeedbackType, ABS(CarbsCalories-{2}), ABS(ProteinCalories-{3}), ABS(FatCalories-{4}) ASC";
+ORDER BY FeedbackType ASC, ABS(CarbsCalories-{2}) ASC, ABS(ProteinCalories-{3}) ASC, ABS(FatCalories-{4}) ASC";
+
+        public const string SELECT_ALL_RECIPES_WITH_USER_FEEDBACK =
+        @"SELECT rec.recipe_id
+		, rec.instructions
+		, rec.ingredients
+		, rec.ingredients_NER
+		, rec.rating_stars
+		, rec.review_count
+		, ISNULL(userFeedback.UserId, 0) AS user_id
+		, ISNULL(userFeedback.FeedbackType, 0) AS feedback_type
+FROM Recipe rec 
+LEFT JOIN
+(
+	SELECT a.UserId, t.RecipeId,t.FeedbackType
+	FROM [RecipeUserFeedback] t
+	INNER JOIN 
+	(
+		SELECT UserId, RecipeId, MAX(FeedbackTimeInTicks) as max_date
+		FROM [dbo].[RecipeUserFeedback] 
+		GROUP BY RecipeId, UserId
+	) a
+	ON a.RecipeId = t.RecipeId AND a.max_date = FeedbackTimeInTicks
+)
+as userFeedback
+ON rec.recipe_id = userFeedback.RecipeId";
 
         public const string SELECT_USER_PROFILE_FOR_USER = "SELECT TOP 1 * FROM [dbo].[UserProfile] WHERE UserId = {0} ORDER BY LastUpdatedTimeInTicks DESC";
     }

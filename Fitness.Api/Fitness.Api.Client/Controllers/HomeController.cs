@@ -62,6 +62,7 @@ namespace Fitness.Api.Client.Controllers
             userViewModel.HeightInCm = profile.HeightInCm;
             userViewModel.Nationality = profile.Nationality;
             userViewModel.Gender = profile.Gender;
+            userViewModel.AgeInYears = profile.AgeInYears;
             userViewModel.LastUpdatedDate = profile.LastUpdatedDate;
             userViewModel.FitnessGoal = profile.FitnessGoal;
             userViewModel.BMR = profile.BMR;

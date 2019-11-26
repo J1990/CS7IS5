@@ -46,16 +46,16 @@
             <td>
                 @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
                 {
-                    @Html.ActionLink("Dislike", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
                 }
                 @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
                 {
-                    @Html.ActionLink("Like", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
                 }
                 @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
                 {
-                    @Html.ActionLink("Like", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Dislike", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
                 }
             </td>
         </tr>

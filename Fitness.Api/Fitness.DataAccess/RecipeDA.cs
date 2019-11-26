@@ -81,5 +81,78 @@ namespace Fitness.DataAccess
 
             return recipes;
         }
+
+        public List<Recipe> GetRecipesWithRecipeIds(string recipeIds)
+        {
+            List<Recipe> recipes = new List<Recipe>();
+
+            using (var dbConnection = new SqlConnection(connectionString))
+            {
+                var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_RECIPES_WITH_RECIPE_IDS, recipeIds);
+
+                using (var sqlAdapter = new SqlDataAdapter(query, dbConnection))
+                {
+                    var recipeTable = new DataTable();
+                    sqlAdapter.Fill(recipeTable);
+
+                    foreach (DataRow row in recipeTable.Rows)
+                    {
+                        var recipe = new Recipe
+                        {
+                            RecipeId = row.Field<int>("recipe_id"),
+                            TotalTimeMinutes = row.Field<int>("total_time_minutes"),
+                            Description = row.Field<string>("description"),
+                            Ingredients = row.Field<string>("ingredients"),
+                            Instructions = row.Field<string>("instructions"),
+                            PhotoUrl = row.Field<string>("photo_url"),
+                            RatingStars = row.Field<double>("rating_stars"),
+                            ReviewCount = row.Field<int>("review_count"),
+                            IdealMealTime = (IdealMealTime)row.Field<short>("IdealMealTime"),
+                            CarbsCalories = row.Field<double>("CarbsCalories"),
+                            ProteinCalories = row.Field<double>("ProteinCalories"),
+                            FatCalories = row.Field<double>("FatCalories"),
+                            FeedbackType = UserFeedbackType.None
+                        };
+                        recipes.Add(recipe);
+                    }
+                }
+            }
+
+            return recipes;
+        }
+
+        public List<MLRecommenderParams> GetRecipeParamsForMLTraining()
+        {
+            List<MLRecommenderParams> parameters = new List<MLRecommenderParams>();
+
+            using (var dbConnection = new SqlConnection(connectionString))
+            {
+                var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_ALL_RECIPES_WITH_USER_FEEDBACK);
+
+                using (var sqlAdapter = new SqlDataAdapter(query, dbConnection))
+                {
+                    var recipeTable = new DataTable();
+                    sqlAdapter.Fill(recipeTable);
+
+                    foreach (DataRow row in recipeTable.Rows)
+                    {
+                        var parameter = new MLRecommenderParams
+                        {
+                            RecipeId = row.Field<int>("recipe_id"),
+                            Ingredients = row.Field<string>("ingredients"),
+                            IngredientsNER = row.Field<string>("ingredients_NER"),
+                            Instructions = row.Field<string>("instructions"),
+                            RatingStars = row.Field<double>("rating_stars"),
+                            ReviewCount = row.Field<int>("review_count"),
+                            UserId = row.Field<int>("user_id"),
+                            FeedbackType = (UserFeedbackType)row.Field<short>("feedback_type")
+                        };
+                        parameters.Add(parameter);
+                    }
+                }
+            }
+
+            return parameters;
+        }
     }
 }

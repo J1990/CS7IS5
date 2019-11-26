@@ -5,9 +5,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fitness.DataAccess
 {
@@ -60,20 +57,21 @@ namespace Fitness.DataAccess
                 {
                     case ItemType.Recipe:
                         insertQuery = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.RECORD_USER_FEEDBACK_FOR_RECIPE, userFeedback.UserId, userFeedback.ItemId,
-                            userFeedback.FeedbackType, userFeedback.FeedbackTime.Ticks);
+                            (int)userFeedback.FeedbackType, userFeedback.FeedbackTime.Ticks);
                         break;
 
                     case ItemType.Workout:
                         insertQuery = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.RECORD_USER_FEEDBACK_FOR_WORKOUT, userFeedback.UserId, userFeedback.ItemId,
-                            userFeedback.FeedbackType, userFeedback.FeedbackTime.Ticks);
+                            (int)userFeedback.FeedbackType, userFeedback.FeedbackTime.Ticks);
                         break;
                 }
 
-                
+                dbConnection.Open();
                 using (var command = new SqlCommand(insertQuery, dbConnection))
                 {
                     command.ExecuteNonQuery();
                 }
+                dbConnection.Close();
             }
         }
     }
