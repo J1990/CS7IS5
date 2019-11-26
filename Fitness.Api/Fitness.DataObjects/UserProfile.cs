@@ -22,6 +22,8 @@ namespace Fitness.DataObjects
 
         public FitnessGoalType FitnessGoal { get; set; }
 
+        public string Injuries { get; set; }
+
         public DateTime LastUpdatedDate { get; set; }
 
         public string Nationality { get; set; }

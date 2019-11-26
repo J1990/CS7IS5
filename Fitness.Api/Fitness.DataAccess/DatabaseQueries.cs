@@ -56,8 +56,12 @@ ON rec.recipe_id = userFeedback.RecipeId";
 
         public const string SELECT_USER_PROFILE_FOR_USER = "SELECT TOP 1 * FROM [dbo].[UserProfile] WHERE UserId = {0} ORDER BY LastUpdatedTimeInTicks DESC";
         //public const string SELECT_EXERCISE_FOR_USER = "SELECT Workout_Name FROM [dbo].[Workout]";
-        public const string SELECT_EXERCISE_FOR_WEIGHTGAIN = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=1";
-        public const string SELECT_EXERCISE_FOR_WEIGHTLOSS = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=2";
-
+        public const string SELECT_EXERCISE_FOR_WEIGHTGAIN = "SELECT TOP 5 Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=1";
+        public const string SELECT_EXERCISE_FOR_WEIGHTLOSS = "SELECT TOP 5 Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=2";
+        
+        public const string SELECT_EXERCISE_FOR_WEIGHTGAIN_INJURY_LOWERBODYPART = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] w join [dbo].UserProfile up on w.BodyPart=up.Injuries where w.FitnessGoal=1 and w.BodyPart='Upper Body'";
+        public const string SELECT_EXERCISE_FOR_WEIGHTGAIN_INJURY_UPPERBODYPART = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] w join [dbo].UserProfile up on w.BodyPart=up.Injuries where w.FitnessGoal=1 and w.BodyPart='Lower Body'";
+        public const string SELECT_EXERCISE_FOR_WEIGHTLOSS_INJURY_LOWERBODYPART = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] w join [dbo].UserProfile up on w.BodyPart=up.Injuries where w.FitnessGoal=2 and w.BodyPart='Upper Body'";
+        public const string SELECT_EXERCISE_FOR_WEIGHTLOSS_INJURY_UPPERBODYPART = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] w join [dbo].UserProfile up on w.BodyPart=up.Injuries where w.FitnessGoal=2 and w.BodyPart='Lower Body'";
     }
 }

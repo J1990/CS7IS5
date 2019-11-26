@@ -31,5 +31,7 @@ namespace Fitness.Api.Client.Models
         public string Nationality { get; set; }
 
         public double BMR { get; set; }
+
+        public string Injuries { get; set; }
     }
 }

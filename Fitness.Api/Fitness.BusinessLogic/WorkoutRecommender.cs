@@ -20,18 +20,28 @@ namespace Fitness.BusinessLogic
             var userProfile = _userProfileBL.GetLatestUserProfileForUser(userId);
 
             var userGoal = userProfile.FitnessGoal;
-            //var workoutDA = _workoutDA.getExercise();
-            
+            var userInjury = userProfile.Injuries;
 
-            switch(userGoal)
-            {
-                case (FitnessGoalType.WeightGain):
-                    workout = _workoutDA.getExerciseForWeightGain();
-                    break;
-                case (FitnessGoalType.WeightLoss):
-                    workout = _workoutDA.getExerciseForWeightLoss();
-                    break;
-            }
+            //var workoutDA = _workoutDA.getExercise();
+
+
+            //switch(userGoal)
+            //{
+            //    case (FitnessGoalType.WeightGain):
+            //        workout = _workoutDA.getExerciseForWeightGain();
+            //        switch(userInjury)
+            //        {
+            //            case ("Lower Body"):
+            //                workout=WorkoutDA.
+            //                break;
+            //        }
+            //        break;
+            //    case (FitnessGoalType.WeightLoss):
+            //        workout = _workoutDA.getExerciseForWeightLoss();
+            //        break;
+            //}
+
+            workout = _workoutDA.getExercise(userGoal, userInjury);
             return workout;
         }
     }

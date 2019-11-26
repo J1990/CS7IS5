@@ -66,6 +66,7 @@ namespace Fitness.Api.Client.Controllers
             userViewModel.LastUpdatedDate = profile.LastUpdatedDate;
             userViewModel.FitnessGoal = profile.FitnessGoal;
             userViewModel.BMR = profile.BMR;
+            userViewModel.Injuries = profile.Injuries;
         }
 
         private UserProfile GetUserProfile(int userId)
