@@ -51,6 +51,7 @@
     <Compile Include="UserFeedback.cs" />
     <Compile Include="UserFeedbackType.cs" />
     <Compile Include="UserProfile.cs" />
+    <Compile Include="Workout.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

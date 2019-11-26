@@ -28,5 +28,9 @@ WHERE IdealMealTime = {1}
 ORDER BY rec.recipe_id, userFeedback.FeedbackType,  ABS(CarbsCalories-{2}), ABS(ProteinCalories-{3}), ABS(FatCalories-{4}) ASC";
 
         public const string SELECT_USER_PROFILE_FOR_USER = "SELECT TOP 1 * FROM [dbo].[UserProfile] WHERE UserId = {0} ORDER BY LastUpdatedTimeInTicks DESC";
+        //public const string SELECT_EXERCISE_FOR_USER = "SELECT Workout_Name FROM [dbo].[Workout]";
+        public const string SELECT_EXERCISE_FOR_WEIGHTGAIN = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=1";
+        public const string SELECT_EXERCISE_FOR_WEIGHTLOSS = "SELECT Workout_Name, BodyPart, Description, Sets, Calories_Burned FROM [dbo].[Workout] WHERE FitnessGoal=2";
+
     }
 }
