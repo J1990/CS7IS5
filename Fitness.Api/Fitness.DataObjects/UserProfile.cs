@@ -25,5 +25,7 @@ namespace Fitness.DataObjects
         public DateTime LastUpdatedDate { get; set; }
 
         public string Nationality { get; set; }
+
+        public double BMR { get; set; }
     }
 }

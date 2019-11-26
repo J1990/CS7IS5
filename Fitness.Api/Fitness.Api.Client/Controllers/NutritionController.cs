@@ -48,5 +48,15 @@ namespace Fitness.Api.Client.Controllers
 
             return new List<Recipe>();
         }
+
+        public ActionResult LikeRecipe(int recipeId)
+        {
+            return RedirectToAction("Recipe");
+        }
+
+        public ActionResult DislikeRecipe(int recipeId)
+        {
+            return RedirectToAction("Recipe");
+        }
     }
 }

@@ -25,7 +25,7 @@ ON a.RecipeId = t.RecipeId AND a.max_date = FeedbackTimeInTicks)
 as userFeedback
 ON rec.recipe_id = userFeedback.RecipeId
 WHERE IdealMealTime = {1}
-ORDER BY rec.recipe_id, userFeedback.FeedbackType,  ABS(CarbsCalories-{2}), ABS(ProteinCalories-{3}), ABS(FatCalories-{4}) ASC";
+ORDER BY rec.recipe_id, userFeedback.FeedbackType, ABS(CarbsCalories-{2}), ABS(ProteinCalories-{3}), ABS(FatCalories-{4}) ASC";
 
         public const string SELECT_USER_PROFILE_FOR_USER = "SELECT TOP 1 * FROM [dbo].[UserProfile] WHERE UserId = {0} ORDER BY LastUpdatedTimeInTicks DESC";
         //public const string SELECT_EXERCISE_FOR_USER = "SELECT Workout_Name FROM [dbo].[Workout]";

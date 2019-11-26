@@ -14,6 +14,7 @@
             <th scope="col">Protein Calories</th>
             <th scope="col">Fat Calories</th>
             <th scope="col">Meal Type</th>
+            <th scope="col">Give Feedback</th>
         </tr>
     </thead>
     <tbody>
@@ -42,13 +43,23 @@
             <td>
                 @recipe.IdealMealTime
             </td>
+            <td>
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
+                {
+                    @Html.ActionLink("Dislike", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                }
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
+                {
+                    @Html.ActionLink("Like", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                }
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
+                {
+                    @Html.ActionLink("Like", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Dislike", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                }
+            </td>
         </tr>
         }
 
     </tbody>
 </table>
-    
-    @*<div class="col-md-4">
-        <h2>Current User Context</h2>
-        <h4>@ViewBag.Message</h4>
-    </div>*@

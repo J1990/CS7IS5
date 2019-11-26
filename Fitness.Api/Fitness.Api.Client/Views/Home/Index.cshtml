@@ -1,10 +1,10 @@
-﻿@model List<Fitness.DataObjects.User>
+﻿@model Fitness.Api.Client.Models.UserViewModel
 @{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
-    <h1>FITNESS APPLICATION</h1>
+    <h1>Fitness and Recipe Recommender</h1>
     <p class="lead">Adaptive fitness web application aims to provide customized fitness and food recommendations to its users.</p>
 </div>
 
@@ -12,26 +12,42 @@
     <div class="col-md-4">
         <h2>Introduction</h2>
         <p>
-            This app adopts a blended approach for capturing data about the user and suggests fitness plans suitable
-            for individual user needs and constraints. This app also lets the user to control app recommendations
-            by providing feedback.
+            <ul style="list-style-type:circle; font-family:Arial; font-size: medium">
+                <li>
+                    This app adopts a blended approach for capturing data about the user and suggests fitness plans suitable
+                    for individual user needs and constraints.
+                </li>
+                <li>
+                    This app also lets the user to control app recommendations
+                    by providing feedback.
+                </li>
+                <li>This app prominently recommends recipes based on user's Fitness Goals.</li>
+            </ul>
         </p>
     </div>
     <div class="col-md-4">
-        <h2>Select User</h2>
+        <h2>Select from Users List:</h2>
         <div>
             <ul class="list-group">
-                @foreach (var user in Model)
+                @foreach (var user in @Model.RegisteredUsers)
                 {
                     <li class="list-group-item">
-                        @Html.ActionLink(user.UserName, "ChangeUserContext", "Home", new { userId = user.Id }, new { @class = "btn btn-primary btn-large" })
+                        @Html.ActionLink(user.UserName, "ChangeUserContext", "Home", new { userId = user.Id }, new { @class = "btn btn-primary btn-lg btn-block" })
                     </li>
                 }
             </ul>
         </div>
     </div>
     <div class="col-md-4">
-        <h2>Current User Context</h2>
-        <h4>@ViewBag.Message</h4>
+        @if (@Model.UserId != 0)
+        {
+            <h2>Current User Context</h2>
+            <h4>Name: @Model.UserName</h4>
+            <h4>Weight: @Model.WeightInKg kg</h4>
+            <h4>Height: @Model.HeightInCm cms</h4>
+            <h4>Gender: @Model.Gender</h4>
+            <h4>Fitness Goal: @Model.FitnessGoal</h4>
+            <h4>Daily Calorie Needs: @Model.BMR</h4>
+        }
     </div>
 </div>
