@@ -52,6 +52,8 @@
     <Compile Include="UserBL.cs" />
     <Compile Include="UserFeedbackBL.cs" />
     <Compile Include="UserProfileBL.cs" />
+    <Compile Include="WorkoutBL.cs" />
+    <Compile Include="WorkoutRecommender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fitness.DataAccess\Fitness.DataAccess.csproj">

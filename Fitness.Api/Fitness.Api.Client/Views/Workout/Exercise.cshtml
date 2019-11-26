@@ -1,7 +1,49 @@
-﻿
+﻿@model List<Fitness.DataObjects.Workout>
 @{
     ViewBag.Title = "Exercise";
 }
 
-<h2>Exercise</h2>
+<h2>Workout Recommendations</h2>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Workout_Name</th>
+            <th scope="col">BodyPart</th>
+            <th scope="col">Description</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Calories_Burned</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var workout in Model)
+        {
+        <tr scope="row">
+            <td>
+                @workout.Workout_Name
+            </td>
+            <td>
+                @workout.BodyPart
+            </td>
+            <td>
+                @workout.Description
+            </td>
+            <td>
+                @workout.Sets
+            </td>
+            <td>
+                @workout.Calories_Burned
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+@*<div class="col-md-4">
+        <h2>Current User Context</h2>
+        <h4>@ViewBag.Message</h4>
+    </div>*@
+
 
