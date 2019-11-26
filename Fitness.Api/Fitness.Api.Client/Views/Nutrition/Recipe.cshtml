@@ -1,15 +1,60 @@
-﻿@model List<Fitness.DataObjects.Recipe>
+﻿@model Fitness.Api.Client.Models.RecipeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
-    
-<h2>Recipe Recommendations</h2>
+
+<style>
+
+    #custom-search-input {
+        margin: 0;
+        margin-top: 10px;
+        padding: 0;
+    }
+
+        #custom-search-input .search-query {
+            padding-right: 3px;
+            padding-right: 4px \9;
+            padding-left: 3px;
+            padding-left: 4px \9;
+            /* IE7-8 doesn't have border-radius, so don't indent the padding */
+            margin-bottom: 0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+        #custom-search-input button {
+            border: 0;
+            background: none;
+            /** belows styles are working good */
+            padding: 2px 5px;
+            margin-top: 2px;
+            position: relative;
+            left: -28px;
+            /* IE7-8 doesn't have border-radius, so don't indent the padding */
+            margin-bottom: 0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            color: #D9230F;
+        }
+
+    .search-query:focus + button {
+        z-index: 3;
+    }
+</style>
+
+<h2>Recipe&nbsp;Recommendations</h2>
+@using (Html.BeginForm("SearchRecipes", "Nutrition", FormMethod.Post, null))
+{
+    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "  search-query form-control", role = "form", @placeholder = "Search" })
+}
 <table class="table">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Image</th>
-            <th scope="col">Instructions</th>
+            <th scope="col">Ingredients</th>
             <th scope="col">Carbohydrate Calories</th>
             <th scope="col">Protein Calories</th>
             <th scope="col">Fat Calories</th>
@@ -19,46 +64,46 @@
     </thead>
     <tbody>
 
-        @foreach (var recipe in Model)
+        @foreach (var recipe in Model.Recipes)
         {
-        <tr scope="row">
-            <td>
-                @recipe.RecipeId
-            </td>
-            <td>
-                <img src="@recipe.PhotoUrl" width="50" height="50"/>
-            </td>
-            <td>
-                @recipe.Ingredients
-            </td>
-            <td>
-                @recipe.CarbsCalories
-            </td>
-            <td>
-                @recipe.ProteinCalories
-            </td>
-            <td>
-                @recipe.FatCalories
-            </td>
-            <td>
-                @recipe.IdealMealTime
-            </td>
-            <td>
-                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
-                {
-                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
-                }
-                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
-                {
-                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
-                }
-                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
-                {
-                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
-                }
-            </td>
-        </tr>
+            <tr scope="row">
+                <td>
+                    @recipe.RecipeId
+                </td>
+                <td>
+                    <img src="@recipe.PhotoUrl" width="50" height="50" />
+                </td>
+                <td>
+                    @recipe.Ingredients
+                </td>
+                <td>
+                    @recipe.CarbsCalories
+                </td>
+                <td>
+                    @recipe.ProteinCalories
+                </td>
+                <td>
+                    @recipe.FatCalories
+                </td>
+                <td>
+                    @recipe.IdealMealTime
+                </td>
+                <td>
+                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
+                    {
+                        @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                    }
+                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
+                    {
+                        @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                    }
+                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
+                    {
+                        @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                    }
+                </td>
+            </tr>
         }
 
     </tbody>

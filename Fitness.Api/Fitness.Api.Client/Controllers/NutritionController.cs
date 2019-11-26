@@ -14,41 +14,22 @@ namespace Fitness.Api.Client.Controllers
     {
         //List<Recipe> recipes = AllRecipes.Instance.Recipes;
         // GET: Nutrition
+
+        static RecipeViewModel _recipeViewModel = new RecipeViewModel();
+
         public ActionResult Recipe()
         {
-            var recipes = GetRecipes();
-
-            return View("Recipe", recipes);
-        }
-
-        private List<Recipe> GetRecipes()
-        {
-            if (UserContext.UserId != 0)
+            if (string.IsNullOrEmpty(_recipeViewModel.SearchQuery) && UserContext.UserId != 0)
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("http://localhost:4564/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(
-                        new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    var responseTask = client.GetAsync("/api/Recipe?userId=" + UserContext.UserId);
-                    responseTask.Wait(3000);
-
-                    var result = responseTask.Result;
-
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<Dictionary<IdealMealTime, List<Recipe>>>();
-                        readTask.Wait();
-
-                        return readTask.Result.Values.SelectMany(x => x).ToList();
-                    }
-                }
+                _recipeViewModel.Recipes = GetRecipes(string.Empty);
+            }
+            else if(!string.IsNullOrEmpty(_recipeViewModel.SearchQuery))
+            {
+                _recipeViewModel.Recipes = GetRecipes(_recipeViewModel.SearchQuery);
             }
 
-            return new List<Recipe>();
-        }
+            return View("Recipe", _recipeViewModel);
+        }        
 
         public ActionResult LikeRecipe(int recipeId)
         {
@@ -62,6 +43,50 @@ namespace Fitness.Api.Client.Controllers
             RecordUserFeedback(recipeId, UserFeedbackType.Dislike);
 
             return RedirectToAction("Recipe");
+        }
+        
+        [HttpPost]
+        public ActionResult SearchRecipes(RecipeViewModel recipeViewModel)
+        {
+            _recipeViewModel = recipeViewModel;
+            return RedirectToAction("Recipe");
+        }
+
+        private List<Recipe> GetRecipes(string searchQuery)
+        {            
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:4564/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                string apiUrl = string.Empty;
+
+                if (string.IsNullOrEmpty(searchQuery))
+                {
+                    apiUrl = "/api/Recipe?userId=" + UserContext.UserId;
+                }
+                else
+                {
+                    apiUrl = "/api/Recipe?searchQuery=" + _recipeViewModel.SearchQuery;
+                }
+
+                var responseTask = client.GetAsync(apiUrl);
+                responseTask.Wait(3000);
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Dictionary<IdealMealTime, List<Recipe>>>();
+                    readTask.Wait();
+
+                    return readTask.Result.Values.SelectMany(x => x).ToList();
+                }
+            }
+
+            return new List<Recipe>();
         }
 
         private void RecordUserFeedback(int recipeId, UserFeedbackType feedbackType)

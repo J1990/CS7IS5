@@ -132,6 +132,7 @@
     <Compile Include="Models\AllRecipes.cs" />
     <Compile Include="Models\AllUsers.cs" />
     <Compile Include="Models\AllWorkouts.cs" />
+    <Compile Include="Models\RecipeViewModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

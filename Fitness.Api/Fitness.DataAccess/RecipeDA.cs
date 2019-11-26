@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Linq;
 
 namespace Fitness.DataAccess
 {
@@ -58,23 +59,7 @@ namespace Fitness.DataAccess
 
                     foreach (DataRow row in recipeTable.Rows)
                     {
-                        var recipe = new Recipe
-                        {
-                            RecipeId = row.Field<int>("recipe_id"),
-                            TotalTimeMinutes = row.Field<int>("total_time_minutes"),
-                            Description = row.Field<string>("description"),
-                            Ingredients = row.Field<string>("ingredients"),
-                            Instructions = row.Field<string>("instructions"),
-                            PhotoUrl = row.Field<string>("photo_url"),
-                            RatingStars = row.Field<double>("rating_stars"),
-                            ReviewCount = row.Field<int>("review_count"),
-                            IdealMealTime = (IdealMealTime)row.Field<short>("IdealMealTime"),
-                            CarbsCalories = row.Field<double>("CarbsCalories"),
-                            ProteinCalories = row.Field<double>("ProteinCalories"),
-                            FatCalories = row.Field<double>("FatCalories"),
-                            FeedbackType = (UserFeedbackType)row.Field<short>("FeedbackType")
-                        };
-                        recipes.Add(recipe);
+                        recipes.Add(GetRecipeObject(row));
                     }
                 }
             }
@@ -97,28 +82,35 @@ namespace Fitness.DataAccess
 
                     foreach (DataRow row in recipeTable.Rows)
                     {
-                        var recipe = new Recipe
-                        {
-                            RecipeId = row.Field<int>("recipe_id"),
-                            TotalTimeMinutes = row.Field<int>("total_time_minutes"),
-                            Description = row.Field<string>("description"),
-                            Ingredients = row.Field<string>("ingredients"),
-                            Instructions = row.Field<string>("instructions"),
-                            PhotoUrl = row.Field<string>("photo_url"),
-                            RatingStars = row.Field<double>("rating_stars"),
-                            ReviewCount = row.Field<int>("review_count"),
-                            IdealMealTime = (IdealMealTime)row.Field<short>("IdealMealTime"),
-                            CarbsCalories = row.Field<double>("CarbsCalories"),
-                            ProteinCalories = row.Field<double>("ProteinCalories"),
-                            FatCalories = row.Field<double>("FatCalories"),
-                            FeedbackType = UserFeedbackType.None
-                        };
-                        recipes.Add(recipe);
+                        recipes.Add(GetRecipeObject(row));
                     }
                 }
             }
 
             return recipes;
+        }
+
+        public Dictionary<IdealMealTime, List<Recipe>> GetRecipes(string searchQuery)
+        {
+            List<Recipe> recipes = new List<Recipe>();
+
+            using (var dbConnection = new SqlConnection(connectionString))
+            {
+                var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_RECIPES_BASED_ON_SEARCH_QUERY, searchQuery);
+
+                using (var sqlAdapter = new SqlDataAdapter(query, dbConnection))
+                {
+                    var recipeTable = new DataTable();
+                    sqlAdapter.Fill(recipeTable);
+
+                    foreach (DataRow row in recipeTable.Rows)
+                    {
+                        recipes.Add(GetRecipeObject(row));
+                    }
+                }
+            }
+
+            return recipes.GroupBy(x => x.IdealMealTime).ToDictionary(y => y.Key, y => y.ToList());
         }
 
         public List<MLRecommenderParams> GetRecipeParamsForMLTraining()
@@ -153,6 +145,33 @@ namespace Fitness.DataAccess
             }
 
             return parameters;
+        }
+
+        private Recipe GetRecipeObject(DataRow row)
+        {
+            var recipe = new Recipe
+                {
+                    RecipeId = row.Field<int>("recipe_id"),
+                    TotalTimeMinutes = row.Field<int>("total_time_minutes"),
+                    Description = row.Field<string>("description"),
+                    Ingredients = row.Field<string>("ingredients"),
+                    Instructions = row.Field<string>("instructions"),
+                    PhotoUrl = row.Field<string>("photo_url"),
+                    RatingStars = row.Field<double>("rating_stars"),
+                    ReviewCount = row.Field<int>("review_count"),
+                    IdealMealTime = (IdealMealTime)row.Field<short>("IdealMealTime"),
+                    CarbsCalories = row.Field<double>("CarbsCalories"),
+                    ProteinCalories = row.Field<double>("ProteinCalories"),
+                    FatCalories = row.Field<double>("FatCalories"),
+                    FeedbackType = UserFeedbackType.None
+                };
+
+            if (row.Table.Columns.Contains("FeedbackType"))
+            {
+                recipe.FeedbackType = (UserFeedbackType)row.Field<short>("FeedbackType");
+            }
+
+            return recipe;
         }
     }
 }

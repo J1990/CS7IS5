@@ -18,5 +18,11 @@ namespace Fitness.Api.Controllers
             RecipeBL recipeBL = new RecipeBL();
             return recipeBL.GetRecipes(userId);
         }
+
+        public Dictionary<IdealMealTime, List<Recipe>> Get(string searchQuery)
+        {
+            RecipeBL recipeBL = new RecipeBL();
+            return recipeBL.GetRecipes(searchQuery);
+        }
     }
 }

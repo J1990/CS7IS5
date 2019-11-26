@@ -24,6 +24,11 @@ namespace Fitness.BusinessLogic
         {
             return _recipeRecommender.GetRecipesForUser(userId);
         }
+
+        public Dictionary<IdealMealTime, List<Recipe>> GetRecipes(string searchQuery)
+        {
+            return _recipeDA.GetRecipes(searchQuery);
+        }
     }
 }
 
