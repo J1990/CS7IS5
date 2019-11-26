@@ -11,7 +11,7 @@
 
         public const string SELECT_ALL_RECIPES = "SELECT TOP 10 * FROM [dbo].[Recipe]";
         public const string SELECT_RECIPES_WITH_RECIPE_IDS = "SELECT * FROM [dbo].[Recipe] WHERE recipe_id IN ({0})";
-        public const string SELECT_RECIPES_BASED_ON_SEARCH_QUERY = "SELECT TOP 20 * FROM [dbo].[Recipe] WHERE ingredients LIKE '%{0}%'";
+        public const string SELECT_RECIPES_BASED_ON_SEARCH_QUERY = "SELECT TOP 20 * FROM [dbo].[Recipe] WHERE ingredients LIKE '%{0}%' OR Cuisine LIKE '%{1}%'";
         public const string SELECT_RECIPES_WITH_CALORIES_FOR_USER =
             @"SELECT TOP 5 rec.*, ISNULL(userFeedback.FeedbackType, 1) AS FeedbackType
 FROM Recipe rec 

@@ -45,5 +45,7 @@
         public double FatCalories { get; set; }
 
         public UserFeedbackType FeedbackType { get; set; }
+
+        public string Cuisine { get; set; }
     }
 }

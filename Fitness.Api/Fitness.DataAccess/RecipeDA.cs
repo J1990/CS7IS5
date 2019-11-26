@@ -96,7 +96,7 @@ namespace Fitness.DataAccess
 
             using (var dbConnection = new SqlConnection(connectionString))
             {
-                var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_RECIPES_BASED_ON_SEARCH_QUERY, searchQuery);
+                var query = string.Format(CultureInfo.InvariantCulture, DatabaseQueries.SELECT_RECIPES_BASED_ON_SEARCH_QUERY, searchQuery, searchQuery);
 
                 using (var sqlAdapter = new SqlDataAdapter(query, dbConnection))
                 {
@@ -163,6 +163,7 @@ namespace Fitness.DataAccess
                     CarbsCalories = row.Field<double>("CarbsCalories"),
                     ProteinCalories = row.Field<double>("ProteinCalories"),
                     FatCalories = row.Field<double>("FatCalories"),
+                    Cuisine = row.Field<string>("Cuisine"),
                     FeedbackType = UserFeedbackType.None
                 };
 

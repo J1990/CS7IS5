@@ -26,6 +26,7 @@ namespace Fitness.Api.Client.Controllers
             else if(!string.IsNullOrEmpty(_recipeViewModel.SearchQuery))
             {
                 _recipeViewModel.Recipes = GetRecipes(_recipeViewModel.SearchQuery);
+                _recipeViewModel.SearchQuery = string.Empty;
             }
 
             return View("Recipe", _recipeViewModel);

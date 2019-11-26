@@ -60,50 +60,54 @@
             <th scope="col">Fat Calories</th>
             <th scope="col">Meal Type</th>
             <th scope="col">Give Feedback</th>
+            <th scope="col">Cuisine</th>
         </tr>
     </thead>
     <tbody>
 
         @foreach (var recipe in Model.Recipes)
         {
-            <tr scope="row">
-                <td>
-                    @recipe.RecipeId
-                </td>
-                <td>
-                    <img src="@recipe.PhotoUrl" width="50" height="50" />
-                </td>
-                <td>
-                    @recipe.Ingredients
-                </td>
-                <td>
-                    @recipe.CarbsCalories
-                </td>
-                <td>
-                    @recipe.ProteinCalories
-                </td>
-                <td>
-                    @recipe.FatCalories
-                </td>
-                <td>
-                    @recipe.IdealMealTime
-                </td>
-                <td>
-                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
-                    {
-                        @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
-                    }
-                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
-                    {
-                        @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
-                    }
-                    @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
-                    {
-                        @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
-                        @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
-                    }
-                </td>
-            </tr>
+        <tr scope="row">
+            <td>
+                @recipe.RecipeId
+            </td>
+            <td>
+                <img src="@recipe.PhotoUrl" width="50" height="50" />
+            </td>
+            <td>
+                @recipe.Ingredients
+            </td>
+            <td>
+                @recipe.CarbsCalories
+            </td>
+            <td>
+                @recipe.ProteinCalories
+            </td>
+            <td>
+                @recipe.FatCalories
+            </td>
+            <td>
+                @recipe.IdealMealTime
+            </td>
+            <td>
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Like)
+                {
+                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                }
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.Dislike)
+                {
+                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                }
+                @if (recipe.FeedbackType == Fitness.DataObjects.UserFeedbackType.None)
+                {
+                    @Html.ActionLink("Like", "LikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Dislike", "DislikeRecipe", "Nutrition", new { recipeId = recipe.RecipeId }, new { @class = "btn btn-danger" })
+                }
+            </td>
+            <td>
+                @recipe.Cuisine
+            </td>
+        </tr>
         }
 
     </tbody>
